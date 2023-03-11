@@ -1,0 +1,80 @@
+```{r}
+# 1. VERCTORES Y MATRICES
+
+student_1 <- c(50.4, 62.3, 92.1, 77.6, TRUE)
+student_2 <- c(41.7, 87.9, 75.3, 72.4, FALSE)
+student_3 <- c(30.3, 67.8, 69.3, 71.2, FALSE)
+student_4 <- c(65.4, 85.1, 92.3, 96.8, TRUE)
+student_5 <- c(70.4, 88.2, 95.2, 90.7, TRUE)
+
+students_vector <- c(student_1, student_2, student_3, student_4, student_5)
+
+student_matrix <- matrix(students_vector, nrow = 5, byrow = TRUE)
+student_matrix
+```
+
+```{r}
+# 2. NOMBRADO DE UNA MATRIZ
+
+name_students <- c("Lily Brown", "Davis Moore", "Susan Taylor", "Mike Jones", "Tom Hill")
+name_courses_legal_age <- c("TIC", "Accounting", "Psychology", "Ethics", "Legal_age")
+
+rownames(student_matrix) <- name_students
+colnames(student_matrix) <- name_courses_legal_age
+student_matrix
+```
+
+```{r}
+# 3. rowSums, cbind
+
+total_grade_student <- rowSums(student_matrix[1:5,-5])
+
+result_students <- cbind(student_matrix, total_grade_student)
+result_students
+```
+
+
+```{r}
+# 4. SELECCIONANDO ELEMENTOS DE UNA MATRIZ
+
+selected_elements <- result_students[c(1, 3, 5),c(2, 4)]
+selected_elements
+```
+
+
+```{r}
+# 5. DATA FRAMES
+
+students_grades_df <- data.frame(result_students)
+subset(subset(students_grades_df, subset = Legal_age== TRUE), subset = Accounting > 80)
+```
+```{r}
+# 6. FUNCIONES, CONDICIONALES Y BUCLES
+
+students_projection <-  function(matriz){
+  for (i in 1:nrow(matriz)){
+    for (j in 1:4){
+      print(matriz[i, j])
+      if (matriz[i, j] <= 45){
+        print("Student at risk")
+      } else if (matriz[i, j] > 45 & matriz[i, j] <61) {
+        print("Student may be approved")
+    } else {
+      print ("Student approved")
+    }
+  }
+  }
+}
+students_projection(result_students)
+```
+```{r}
+# 7. DATA FRAMES Y LAPPY
+
+index_education <- function(grade){
+  0.5*(1+(grade*0.01))
+}
+
+all_students_grade <- students_grades_df[,c(1:4)]
+resultado <- lapply(all_students_grade, index_education)
+resultado
+```
